@@ -1,0 +1,74 @@
+<div class="page-header">
+  <h1 class="page-title">Proveedores</h1>
+  <button class="btn-primary" id="btnNuevoProveedor">
+    <i class="bi bi-plus-lg"></i> Nuevo proveedor
+  </button>
+</div>
+
+<div class="row mb-3 p-3">
+  <div class="col-md-6 col-lg-4">
+    <div class="input-group">
+      <span class="input-group-text bg-white border-end-0">
+        <i class="bi bi-search text-muted"></i>
+      </span>
+      <input type="text" id="inputBuscar" class="form-control" placeholder="Buscar por nombre..">
+    </div>
+  </div>
+</div>
+
+<div class="card-panel">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>RUC</th>
+        <th>Teléfono</th>
+        <th>Email</th>
+        <th class="text-end">Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tabla-proveedores"></tbody>
+  </table>
+</div>
+
+<!-- MODAL DE PROVEEDOR (dentro de la vista) -->
+<div class="modal-overlay" id="modalProveedor">
+  <div class="modal-panel">
+    <div class="modal-header-custom">
+      <div class="modal-title-custom">Proveedor</div>
+      <button class="btn-modal-close" id="closeModalProveedor"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="modal-body-custom">
+      <div class="mb-3">
+        <label class="form-label">Nombre *</label>
+        <input type="text" class="form-control" id="provNombre">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">RUC *</label>
+        <input type="text" class="form-control" id="provRuc">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Teléfono</label>
+        <input type="text" class="form-control" id="provTelefono">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" id="provEmail">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Dirección</label>
+        <input type="text" class="form-control" id="provDireccion">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Contacto</label>
+        <input type="text" class="form-control" id="provContacto">
+      </div>
+    </div>
+    <div class="modal-footer-custom">
+      <button class="btn-cancel" id="cancelProveedor">Cancelar</button>
+      <button class="btn-primary" id="saveProveedor">
+        <i class="bi bi-check-lg"></i> Guardar
+      </button>
+    </div>
+  </div>
+</div>

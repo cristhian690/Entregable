@@ -1,0 +1,59 @@
+<div class="page-header">
+  <h1 class="page-title">Encargados</h1>
+  <button class="btn-primary" id="btnNuevoEncargado">
+    <i class="bi bi-plus-lg"></i> Nuevo encargado
+  </button>
+</div>
+
+<div class="card-panel">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Cargo</th>
+        <th>Área</th>
+        <th>Turno</th>
+        <th class="text-end">Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tabla-encargados"></tbody>
+  </table>
+</div>
+
+<!-- Modal Encargado -->
+<div class="modal-overlay" id="modalEncargado">
+  <div class="modal-panel">
+    <div class="modal-header-custom">
+      <div class="modal-title-custom">Encargado</div>
+      <button class="btn-modal-close" id="closeModalEncargado"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="modal-body-custom">
+      <div class="mb-3">
+        <label class="form-label">Nombre *</label>
+        <input type="text" class="form-control" id="encNombre">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Cargo</label>
+        <input type="text" class="form-control" id="encCargo">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Área</label>
+        <input type="text" class="form-control" id="encArea">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Turno</label>
+        <select class="form-select" id="encTurno">
+          <option value="">Seleccionar...</option>
+          <option value="mañana">Mañana</option>
+          <option value="tarde">Tarde</option>
+          <option value="noche">Noche</option>
+          <option value="rotativo">Rotativo</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer-custom">
+      <button class="btn-cancel" id="cancelEncargado">Cancelar</button>
+      <button class="btn-primary" id="saveEncargado">Guardar</button>
+    </div>
+  </div>
+</div>

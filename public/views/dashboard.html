@@ -1,0 +1,47 @@
+<div class="page-header">
+  <h1 class="page-title">Dashboard</h1>
+  <p class="page-subtitle">Resumen general del inventario</p>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon" style="--c:#6366f1"><i class="bi bi-tools"></i></div>
+    <div class="stat-value" id="stat-total-productos">0</div>
+    <div class="stat-label">Herramientas</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon" style="--c:#f59e0b"><i class="bi bi-people-fill"></i></div>
+    <div class="stat-value" id="stat-total-marcas">0</div>
+    <div class="stat-label">Empleados</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon" style="--c:#10b981"><i class="bi bi-bookmark-check-fill"></i></div>
+    <div class="stat-value" id="stat-valor-total">0</div>
+    <div class="stat-label">Préstamos Activos</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon" style="--c:#ec4899"><i class="bi bi-exclamation-triangle-fill"></i></div>
+    <div class="stat-value" id="stat-precio-promedio">0</div>
+    <div class="stat-label">Stock Bajo</div>
+  </div>
+</div>
+
+<div class="row g-4 mt-1">
+  <div class="col-lg-7">
+    <div class="card-panel">
+      <div class="panel-header">
+        <span class="panel-title"><i class="bi bi-clock-history me-2"></i>Últimas Herramientas</span>
+        <a href="#" class="btn-link" data-page="herramientas">Ver todas</a>
+      </div>
+      <div id="tabla-recientes" class="text-muted text-center py-3">No hay datos recientes</div>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="card-panel">
+      <div class="panel-header">
+        <span class="panel-title"><i class="bi bi-bar-chart-fill me-2"></i>Herramientas por Marca</span>
+      </div>
+      <div id="chart-marcas" class="text-muted text-center py-3">Sin datos</div>
+    </div>
+  </div>
+</div>

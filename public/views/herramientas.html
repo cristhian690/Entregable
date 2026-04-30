@@ -1,0 +1,123 @@
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Herramientas</h1>
+    <p class="page-subtitle">Gestión de herramientas físicas del inventario</p>
+  </div>
+  <button class="btn-primary" id="btnNuevaHerramienta">
+    <i class="bi bi-plus-lg"></i> Nueva Herramienta
+  </button>
+</div>
+
+<!-- Buscador de herramientas -->
+<div class="row mb-3 p-3">
+  <div class="col-md-6 col-lg-4">
+    <div class="input-group">
+      <span class="input-group-text bg-white border-end-0">
+        <i class="bi bi-search text-muted"></i>
+      </span>
+      <input type="text" id="inputBuscar" class="form-control" placeholder="Buscar por código o nombre...">
+    </div>
+  </div>
+</div>
+
+<div class="card-panel">
+  <div class="panel-header">
+    <span class="panel-title">
+      <i class="bi bi-tools me-2"></i>Listado de herramientas
+    </span>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Marca</th>
+          <th>Tipo</th>
+          <th>Estado</th>
+          <th>Stock</th>
+          <th>Ubicación</th>
+          <th class="text-end">Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-herramientas">
+        <tr>
+          <td colspan="8" class="text-center py-4">
+            <div class="spinner-custom"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- MODAL HERRAMIENTA -->
+<div class="modal-overlay" id="modalHerramienta">
+  <div class="modal-panel">
+    <div class="modal-header-custom">
+      <div class="modal-title-custom">Herramienta</div>
+      <button class="btn-modal-close" id="closeModalHerramienta"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="modal-body-custom">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Código *</label>
+          <input type="text" class="form-control" id="herrCodigo" placeholder="H-006">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Nombre *</label>
+          <input type="text" class="form-control" id="herrNombre">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Marca *</label>
+          <select class="form-select" id="herrMarca">
+            <option value="">Cargando...</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Tipo</label>
+          <select class="form-select" id="herrTipo">
+            <option value="manual">Manual</option>
+            <option value="eléctrica">Eléctrica</option>
+            <option value="neumática">Neumática</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">N° Serie</label>
+          <input type="text" class="form-control" id="herrSerie">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Estado</label>
+          <select class="form-select" id="herrEstado">
+            <option value="bueno">Bueno</option>
+            <option value="regular">Regular</option>
+            <option value="malo">Malo</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Stock</label>
+          <input type="number" class="form-control" id="herrCantidad" value="0" min="0">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Stock mínimo</label>
+          <input type="number" class="form-control" id="herrStockMin" value="1" min="0">
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Ubicación</label>
+          <input type="text" class="form-control" id="herrUbicacion" placeholder="Estante A1">
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Descripción</label>
+          <textarea class="form-control" id="herrDescripcion" rows="2"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer-custom">
+      <button class="btn-cancel" id="cancelHerramienta">Cancelar</button>
+      <button class="btn-primary" id="saveHerramienta">
+        <i class="bi bi-check-lg"></i> Guardar
+      </button>
+    </div>
+  </div>
+</div>

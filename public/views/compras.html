@@ -1,0 +1,95 @@
+<div class="page-header">
+  <h1 class="page-title">Compras</h1>
+  <button class="btn-primary" id="btnNuevaCompra">
+    <i class="bi bi-plus-lg"></i> Nueva compra
+  </button>
+</div>
+
+<div class="row mb-3 p-3">
+  <div class="col-md-6 col-lg-4">
+    <div class="input-group">
+      <span class="input-group-text bg-white border-end-0">
+        <i class="bi bi-search text-muted"></i>
+      </span>
+      <input type="text" id="inputBuscar" class="form-control" placeholder="Buscar por proveedores..">
+    </div>
+  </div>
+</div>
+
+<div class="card-panel">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Proveedor</th>
+        <th>Encargado</th>
+        <th>Fecha</th>
+        <th>Total</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody id="tabla-compras">
+      <tr>
+        <td colspan="6" class="text-center py-3"><div class="spinner-custom"></div></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- MODAL COMPRA -->
+<div class="modal-overlay" id="modalCompra">
+  <div class="modal-panel">
+    <div class="modal-header-custom">
+      <div class="modal-title-custom">Nueva Compra</div>
+      <button class="btn-modal-close" id="closeModalCompra"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="modal-body-custom">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Proveedor *</label>
+          <select class="form-select" id="selectProveedor">
+            <option value="">Cargando...</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Encargado *</label>
+          <select class="form-select" id="selectEncargadoCompra">
+            <option value="">Cargando...</option>
+          </select>
+        </div>
+        <div class="col-md-12">
+          <hr>
+          <label class="form-label fw-bold">Herramientas a comprar</label>
+          <div class="row g-2 mb-2">
+            <div class="col-md-5">
+              <select class="form-select" id="selectHerramientaCompra">
+                <option value="">Seleccionar herramienta...</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <input type="number" class="form-control" id="cantidadCompra" value="1" min="1" placeholder="Cantidad">
+            </div>
+            <div class="col-md-3">
+              <input type="number" class="form-control" id="precioCompra" value="0" min="0" step="0.01" placeholder="Precio unit.">
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-outline-primary w-100" id="btnAgregarHerramientaCompra">
+                <i class="bi bi-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div id="herramientasCompraSeleccionadas" class="mt-2"></div>
+          <div class="text-end mt-3">
+            <h5>Total: <span id="totalCompraDisplay">S/ 0.00</span></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer-custom">
+      <button class="btn-cancel" id="cancelCompra">Cancelar</button>
+      <button class="btn-primary" id="saveCompra">
+        <i class="bi bi-check-lg"></i> Registrar Compra
+      </button>
+    </div>
+  </div>
+</div>

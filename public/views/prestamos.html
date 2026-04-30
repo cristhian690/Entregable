@@ -1,0 +1,94 @@
+<div class="page-header">
+  <h1 class="page-title">Préstamos</h1>
+  <button class="btn-primary" id="btnNuevoPrestamo">
+    <i class="bi bi-plus-lg"></i> Nuevo préstamo
+  </button>
+</div>
+
+
+<div class="row mb-3 p-3">
+  <div class="col-md-6 col-lg-4">
+    <div class="input-group">
+      <span class="input-group-text bg-white border-end-0">
+        <i class="bi bi-search text-muted"></i>
+      </span>
+      <input type="text" id="inputBuscar" class="form-control" placeholder="Buscar por empleado..">
+    </div>
+  </div>
+</div>
+
+<div class="card-panel">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Empleado</th>
+        <th>Encargado</th>
+        <th>Motivo</th>
+        <th>Área</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th class="text-end">Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tabla-prestamos">
+      <tr>
+        <td colspan="8" class="text-center py-3"><div class="spinner-custom"></div></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- MODAL PRÉSTAMO -->
+<div class="modal-overlay" id="modalPrestamo">
+  <div class="modal-panel">
+    <div class="modal-header-custom">
+      <div class="modal-title-custom">Nuevo Préstamo</div>
+      <button class="btn-modal-close" id="closeModalPrestamo"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="modal-body-custom">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Empleado *</label>
+          <select class="form-select" id="selectEmpleado">
+            <option value="">Cargando...</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Encargado *</label>
+          <select class="form-select" id="selectEncargado">
+            <option value="">Cargando...</option>
+          </select>
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Motivo de uso</label>
+          <input type="text" class="form-control" id="presMotivo" placeholder="Ej: Mantenimiento de equipos">
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Área de uso</label>
+          <input type="text" class="form-control" id="presArea" placeholder="Ej: Soldadura">
+        </div>
+        <div class="col-md-12">
+          <hr>
+          <label class="form-label fw-bold">Herramientas a prestar</label>
+          <div class="d-flex gap-2 mb-2">
+            <select class="form-select" id="selectHerramienta">
+              <option value="">Cargando herramientas...</option>
+            </select>
+            <input type="number" class="form-control" id="cantidadHerramienta" value="1" min="1" style="width:90px">
+            <button type="button" class="btn btn-outline-primary" id="btnAgregarHerramienta">
+              <i class="bi bi-plus"></i> Agregar
+            </button>
+          </div>
+          <div id="herramientasSeleccionadas" class="mt-2"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer-custom">
+      <button class="btn-cancel" id="cancelPrestamo">Cancelar</button>
+      <button class="btn-primary" id="savePrestamo">
+        <i class="bi bi-check-lg"></i> Registrar Préstamo
+      </button>
+    </div>
+  </div>
+</div>

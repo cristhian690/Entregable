@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestión de Herramientas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i class="bi bi-box-seam-fill"></i></div>
+      <div>
+        <div class="brand-name">StockPro</div>
+        <div class="brand-sub">Panel de gestión</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Principal</div>
+      <a href="#" class="nav-item active" data-page="dashboard"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a>
+      <div class="nav-section-label">Principal</div>
+      <a href="#" class="nav-item" data-page="herramientas"><i class="bi bi-box-seam"></i><span>Herramientas</span><span class="nav-badge" id="badge-herramientas">0</span></a>
+      <a href="#" class="nav-item" data-page="prestamos"><i class="bi bi-bookmark-star"></i><span>Prestamos</span><span class="nav-badge" id="badge-prestamos">0</span></a>
+      <div class="nav-section-label">Abastecimiento</div>
+      <a href="#" class="nav-item" data-page="compras"><i class="bi bi-cart3"></i><span>Compras</span><span class="nav-badge" id="badge-compras">0</span></a>
+      <a href="#" class="nav-item" data-page="proveedores"><i class="bi bi-truck"></i><span>Proveedores</span><span class="nav-badge" id="badge-proveedores">0</span></a>
+      <div class="nav-section-label">Configuracion</div>
+      <a href="#" class="nav-item" data-page="productos"><i class="bi bi-tags"></i><span>Productos</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="d-flex align-items-center gap-2">
+        <div class="avatar-xs"><i class="bi bi-person-fill"></i></div>
+        <div>
+          <div class="fw-600 text-sm">Administrador</div>
+          <div class="text-muted" style="font-size:11px">Sistema v1.0</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <main class="main-content" id="mainContent">
+    <header class="topbar">
+      <button class="btn-toggle-sidebar" id="btnToggleSidebar"><i class="bi bi-list"></i></button>
+      <div class="topbar-title" id="topbarTitle">Dashboard</div>
+      <div class="topbar-actions">
+        <div class="status-dot"></div>
+        <span class="text-sm text-muted">Conectado</span>
+      </div>
+    </header>
+    <div class="page-wrapper" id="pageContainer">
+      <div class="d-flex justify-content-center align-items-center" style="height:60vh">
+        <div class="spinner-custom"></div>
+      </div>
+    </div>
+  </main>
+
+  <div id="modalsContainer">
+    <!-- Modal Préstamo -->
+    <div class="modal-overlay" id="modalPrestamo">
+      <div class="modal-panel">
+        <div class="modal-header-custom">
+          <div class="modal-title-custom">Nuevo Préstamo</div>
+          <button class="btn-modal-close" id="closeModalPrestamo"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="modal-body-custom">
+          <div class="mb-3"><label class="form-label">Empleado</label><select class="form-select" id="selectEmpleado"><option value="">Cargando...</option></select></div>
+          <div class="mb-3"><label class="form-label">Encargado</label><select class="form-select" id="selectEncargado"><option value="">Cargando...</option></select></div>
+          <div class="mb-3">
+            <label class="form-label">Herramienta</label>
+            <div class="d-flex gap-2">
+              <select class="form-select" id="selectHerramienta"><option value="">Seleccionar...</option></select>
+              <input type="number" class="form-control" id="cantidadHerramienta" value="1" min="1" style="width:80px">
+              <button class="btn btn-outline-primary" id="btnAgregarHerramienta"><i class="bi bi-plus"></i></button>
+            </div>
+          </div>
+          <div id="herramientasSeleccionadas"></div>
+        </div>
+        <div class="modal-footer-custom">
+          <button class="btn-cancel" id="cancelPrestamo">Cancelar</button>
+          <button class="btn-primary" id="savePrestamo">Registrar Préstamo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Compra -->
+    <div class="modal-overlay" id="modalCompra">
+      <div class="modal-panel">
+        <div class="modal-header-custom">
+          <div class="modal-title-custom">Nueva Compra</div>
+          <button class="btn-modal-close" id="closeModalCompra"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="modal-body-custom">
+          <div class="mb-3"><label class="form-label">Proveedor</label><select class="form-select" id="selectProveedor"><option value="">Cargando...</option></select></div>
+          <div class="mb-3"><label class="form-label">Encargado</label><select class="form-select" id="selectEncargadoCompra"><option value="">Cargando...</option></select></div>
+        </div>
+        <div class="modal-footer-custom">
+          <button class="btn-cancel" id="cancelCompra">Cancelar</button>
+          <button class="btn-primary" id="saveCompra">Registrar Compra</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Proveedor -->
+    <div class="modal-overlay" id="modalProveedor">
+      <div class="modal-panel">
+        <div class="modal-header-custom">
+          <div class="modal-title-custom">Proveedor</div>
+          <button class="btn-modal-close" id="closeModalProveedor"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="modal-body-custom">
+          <div class="mb-3"><label class="form-label">Nombre *</label><input type="text" class="form-control" id="provNombre"></div>
+          <div class="mb-3"><label class="form-label">RUC *</label><input type="text" class="form-control" id="provRuc"></div>
+          <div class="mb-3"><label class="form-label">Teléfono</label><input type="text" class="form-control" id="provTelefono"></div>
+          <div class="mb-3"><label class="form-label">Email</label><input type="email" class="form-control" id="provEmail"></div>
+        </div>
+        <div class="modal-footer-custom">
+          <button class="btn-cancel" id="cancelProveedor">Cancelar</button>
+          <button class="btn-primary" id="saveProveedor">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/modules/utils.js"></script>
+  <script src="js/modules/router.js"></script>
+  <script src="js/modules/dashboard.js"></script>
+  <script src="js/modules/herramientas.js"></script>
+  <script src="js/modules/empleados.js"></script>
+  <script src="js/modules/encargados.js"></script>
+  <script src="js/modules/alertas.js"></script>
+  <script src="js/modules/prestamos.js"></script>
+  <script src="js/modules/compras.js"></script>
+  <script src="js/modules/proveedores.js"></script>
+  <script src="js/modules/productos.js"></script>
+  <script src="js/modules/app.js"></script>
+</body>
+</html>
