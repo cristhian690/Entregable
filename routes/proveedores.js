@@ -1,32 +1,44 @@
 const express = require('express');
-const router = express.Router();
-const pool = require('../config/db');
+const router  = express.Router();
+const pool    = require('../config/db');
 
+// GET todos los proveedores activos
 router.get('/', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM proveedores WHERE activo = 1 ORDER BY id_proveedor DESC');
+    const [rows] = await pool.query(
+      'SELECT * FROM proveedores WHERE activo = 1 ORDER BY id_proveedor DESC'
+    );
     res.json({ success: true, data: rows });
   } catch (err) {
-    res.status(500).json({ success: false, message: 'Error', error: err.message });
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
+// GET un proveedor por ID
 router.get('/:id', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM proveedores WHERE id_proveedor = ?', [req.params.id]);
-    if (rows.length === 0) return res.status(404).json({ success: false, message: 'No encontrado' });
+    const [rows] = await pool.query(
+      'SELECT * FROM proveedores WHERE id_proveedor = ? AND activo = 1',
+      [req.params.id]
+    );
+    if (rows.length === 0)
+      return res.status(404).json({ success: false, message: 'Proveedor no encontrado' });
     res.json({ success: true, data: rows[0] });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
 });
 
+// POST crear proveedor
 router.post('/', async (req, res) => {
   try {
     const { nombre, ruc, telefono, email, direccion, contacto } = req.body;
+    if (!nombre) return res.status(400).json({ success: false, message: 'El nombre es requerido' });
+    if (!ruc)    return res.status(400).json({ success: false, message: 'El RUC es requerido' });
+
     const [result] = await pool.query(
       'INSERT INTO proveedores (nombre, ruc, telefono, email, direccion, contacto) VALUES (?, ?, ?, ?, ?, ?)',
-      [nombre, ruc, telefono, email, direccion, contacto]
+      [nombre, ruc, telefono || null, email || null, direccion || null, contacto || null]
     );
     res.json({ success: true, message: 'Proveedor creado', id: result.insertId });
   } catch (err) {
@@ -34,23 +46,37 @@ router.post('/', async (req, res) => {
   }
 });
 
+// PUT actualizar proveedor
 router.put('/:id', async (req, res) => {
   try {
-    const { nombre, ruc, telefono, email, direccion, contacto, activo } = req.body;
-    await pool.query(
-      'UPDATE proveedores SET nombre=?, ruc=?, telefono=?, email=?, direccion=?, contacto=?, activo=? WHERE id_proveedor=?',
-      [nombre, ruc, telefono, email, direccion, contacto, activo, req.params.id]
+    const { nombre, ruc, telefono, email, direccion, contacto } = req.body;
+    if (!nombre) return res.status(400).json({ success: false, message: 'El nombre es requerido' });
+
+    const [result] = await pool.query(
+      `UPDATE proveedores
+       SET nombre=?, ruc=?, telefono=?, email=?, direccion=?, contacto=?
+       WHERE id_proveedor=? AND activo=1`,
+      [nombre, ruc, telefono || null, email || null,
+       direccion || null, contacto || null, req.params.id]
     );
-    res.json({ success: true, message: 'Actualizado' });
+    if (result.affectedRows === 0)
+      return res.status(404).json({ success: false, message: 'Proveedor no encontrado' });
+    res.json({ success: true, message: 'Proveedor actualizado' });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
 });
 
+// DELETE proveedor (soft delete con activo = 0)
 router.delete('/:id', async (req, res) => {
   try {
-    await pool.query('UPDATE proveedores SET activo = 0 WHERE id_proveedor = ?', [req.params.id]);
-    res.json({ success: true, message: 'Eliminado' });
+    const [result] = await pool.query(
+      'UPDATE proveedores SET activo = 0 WHERE id_proveedor = ? AND activo = 1',
+      [req.params.id]
+    );
+    if (result.affectedRows === 0)
+      return res.status(404).json({ success: false, message: 'Proveedor no encontrado' });
+    res.json({ success: true, message: 'Proveedor eliminado' });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }

@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+
+  <!-- ══════════════ SIDEBAR ══════════════ -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <div class="brand-icon"><i class="bi bi-box-seam-fill"></i></div>
@@ -18,18 +20,47 @@
         <div class="brand-sub">Panel de gestión</div>
       </div>
     </div>
+
     <nav class="sidebar-nav">
       <div class="nav-section-label">Principal</div>
-      <a href="#" class="nav-item active" data-page="dashboard"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a>
-      <div class="nav-section-label">Principal</div>
-      <a href="#" class="nav-item" data-page="herramientas"><i class="bi bi-box-seam"></i><span>Herramientas</span><span class="nav-badge" id="badge-herramientas">0</span></a>
-      <a href="#" class="nav-item" data-page="prestamos"><i class="bi bi-bookmark-star"></i><span>Prestamos</span><span class="nav-badge" id="badge-prestamos">0</span></a>
+      <a href="#" class="nav-item active" data-page="dashboard">
+        <i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span>
+      </a>
+
+      <div class="nav-section-label">Inventario</div>
+      <a href="#" class="nav-item" data-page="herramientas">
+        <i class="bi bi-tools"></i><span>Herramientas</span>
+        <span class="nav-badge" id="badge-herramientas">0</span>
+      </a>
+      <a href="#" class="nav-item" data-page="prestamos">
+        <i class="bi bi-bookmark-star"></i><span>Préstamos</span>
+        <span class="nav-badge" id="badge-prestamos">0</span>
+      </a>
+
       <div class="nav-section-label">Abastecimiento</div>
-      <a href="#" class="nav-item" data-page="compras"><i class="bi bi-cart3"></i><span>Compras</span><span class="nav-badge" id="badge-compras">0</span></a>
-      <a href="#" class="nav-item" data-page="proveedores"><i class="bi bi-truck"></i><span>Proveedores</span><span class="nav-badge" id="badge-proveedores">0</span></a>
-      <div class="nav-section-label">Configuracion</div>
-      <a href="#" class="nav-item" data-page="productos"><i class="bi bi-tags"></i><span>Productos</span></a>
+      <a href="#" class="nav-item" data-page="compras">
+        <i class="bi bi-cart3"></i><span>Compras</span>
+        <span class="nav-badge" id="badge-compras">0</span>
+      </a>
+      <a href="#" class="nav-item" data-page="proveedores">
+        <i class="bi bi-truck"></i><span>Proveedores</span>
+        <span class="nav-badge" id="badge-proveedores">0</span>
+      </a>
+
+      <div class="nav-section-label">Personal</div>
+      <a href="#" class="nav-item" data-page="empleados">
+        <i class="bi bi-people"></i><span>Empleados</span>
+      </a>
+      <a href="#" class="nav-item" data-page="encargados">
+        <i class="bi bi-person-badge"></i><span>Encargados</span>
+      </a>
+
+      <div class="nav-section-label">Sistema</div>
+      <a href="#" class="nav-item" data-page="alertas">
+        <i class="bi bi-bell"></i><span>Alertas</span>
+      </a>
     </nav>
+
     <div class="sidebar-footer">
       <div class="d-flex align-items-center gap-2">
         <div class="avatar-xs"><i class="bi bi-person-fill"></i></div>
@@ -43,6 +74,7 @@
 
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
+  <!-- ══════════════ MAIN ══════════════ -->
   <main class="main-content" id="mainContent">
     <header class="topbar">
       <button class="btn-toggle-sidebar" id="btnToggleSidebar"><i class="bi bi-list"></i></button>
@@ -59,8 +91,10 @@
     </div>
   </main>
 
+  <!-- ══════════════ MODALES ══════════════ -->
   <div id="modalsContainer">
-    <!-- Modal Préstamo -->
+
+    <!-- ── Modal Préstamo (COMPLETO) ── -->
     <div class="modal-overlay" id="modalPrestamo">
       <div class="modal-panel">
         <div class="modal-header-custom">
@@ -68,26 +102,54 @@
           <button class="btn-modal-close" id="closeModalPrestamo"><i class="bi bi-x-lg"></i></button>
         </div>
         <div class="modal-body-custom">
-          <div class="mb-3"><label class="form-label">Empleado</label><select class="form-select" id="selectEmpleado"><option value="">Cargando...</option></select></div>
-          <div class="mb-3"><label class="form-label">Encargado</label><select class="form-select" id="selectEncargado"><option value="">Cargando...</option></select></div>
-          <div class="mb-3">
-            <label class="form-label">Herramienta</label>
-            <div class="d-flex gap-2">
-              <select class="form-select" id="selectHerramienta"><option value="">Seleccionar...</option></select>
-              <input type="number" class="form-control" id="cantidadHerramienta" value="1" min="1" style="width:80px">
-              <button class="btn btn-outline-primary" id="btnAgregarHerramienta"><i class="bi bi-plus"></i></button>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Empleado *</label>
+              <select class="form-select" id="selectEmpleado">
+                <option value="">Seleccionar empleado...</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Encargado *</label>
+              <select class="form-select" id="selectEncargado">
+                <option value="">Seleccionar encargado...</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Motivo de uso</label>
+              <input type="text" class="form-control" id="presMotivo" placeholder="Ej: Mantenimiento de equipos">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Área de uso</label>
+              <input type="text" class="form-control" id="presArea" placeholder="Ej: Soldadura">
+            </div>
+            <div class="col-12">
+              <hr class="my-1">
+              <label class="form-label fw-bold">Herramientas a prestar</label>
+              <div class="d-flex gap-2 mb-2">
+                <select class="form-select" id="selectHerramienta">
+                  <option value="">Seleccionar herramienta...</option>
+                </select>
+                <input type="number" class="form-control" id="cantidadHerramienta"
+                       value="1" min="1" style="width:90px" placeholder="Cant.">
+                <button class="btn btn-outline-primary" id="btnAgregarHerramienta">
+                  <i class="bi bi-plus"></i> Agregar
+                </button>
+              </div>
+              <div id="herramientasSeleccionadas" class="mt-2"></div>
             </div>
           </div>
-          <div id="herramientasSeleccionadas"></div>
         </div>
         <div class="modal-footer-custom">
           <button class="btn-cancel" id="cancelPrestamo">Cancelar</button>
-          <button class="btn-primary" id="savePrestamo">Registrar Préstamo</button>
+          <button class="btn-primary" id="savePrestamo">
+            <i class="bi bi-check-lg"></i> Registrar Préstamo
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- Modal Compra -->
+    <!-- ── Modal Compra (COMPLETO) ── -->
     <div class="modal-overlay" id="modalCompra">
       <div class="modal-panel">
         <div class="modal-header-custom">
@@ -95,17 +157,59 @@
           <button class="btn-modal-close" id="closeModalCompra"><i class="bi bi-x-lg"></i></button>
         </div>
         <div class="modal-body-custom">
-          <div class="mb-3"><label class="form-label">Proveedor</label><select class="form-select" id="selectProveedor"><option value="">Cargando...</option></select></div>
-          <div class="mb-3"><label class="form-label">Encargado</label><select class="form-select" id="selectEncargadoCompra"><option value="">Cargando...</option></select></div>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Proveedor *</label>
+              <select class="form-select" id="selectProveedor">
+                <option value="">Seleccionar proveedor...</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Encargado *</label>
+              <select class="form-select" id="selectEncargadoCompra">
+                <option value="">Seleccionar encargado...</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <hr class="my-1">
+              <label class="form-label fw-bold">Herramientas a comprar</label>
+              <div class="row g-2 mb-2">
+                <div class="col-md-5">
+                  <select class="form-select" id="selectHerramientaCompra">
+                    <option value="">Seleccionar herramienta...</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <input type="number" class="form-control" id="cantidadCompra"
+                         value="1" min="1" placeholder="Cant.">
+                </div>
+                <div class="col-md-3">
+                  <input type="number" class="form-control" id="precioCompra"
+                         value="0" min="0" step="0.01" placeholder="Precio unit.">
+                </div>
+                <div class="col-md-2">
+                  <button class="btn btn-outline-primary w-100" id="btnAgregarHerramientaCompra">
+                    <i class="bi bi-plus"></i>
+                  </button>
+                </div>
+              </div>
+              <div id="herramientasCompraSeleccionadas" class="mt-2"></div>
+              <div class="text-end mt-3">
+                <h5>Total: <span id="totalCompraDisplay">S/ 0.00</span></h5>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="modal-footer-custom">
           <button class="btn-cancel" id="cancelCompra">Cancelar</button>
-          <button class="btn-primary" id="saveCompra">Registrar Compra</button>
+          <button class="btn-primary" id="saveCompra">
+            <i class="bi bi-check-lg"></i> Registrar Compra
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- Modal Proveedor -->
+    <!-- ── Modal Proveedor (COMPLETO) ── -->
     <div class="modal-overlay" id="modalProveedor">
       <div class="modal-panel">
         <div class="modal-header-custom">
@@ -113,21 +217,132 @@
           <button class="btn-modal-close" id="closeModalProveedor"><i class="bi bi-x-lg"></i></button>
         </div>
         <div class="modal-body-custom">
-          <div class="mb-3"><label class="form-label">Nombre *</label><input type="text" class="form-control" id="provNombre"></div>
-          <div class="mb-3"><label class="form-label">RUC *</label><input type="text" class="form-control" id="provRuc"></div>
-          <div class="mb-3"><label class="form-label">Teléfono</label><input type="text" class="form-control" id="provTelefono"></div>
-          <div class="mb-3"><label class="form-label">Email</label><input type="email" class="form-control" id="provEmail"></div>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Nombre *</label>
+              <input type="text" class="form-control" id="provNombre" placeholder="Nombre del proveedor">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">RUC *</label>
+              <input type="text" class="form-control" id="provRuc" placeholder="20123456789">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Teléfono</label>
+              <input type="text" class="form-control" id="provTelefono" placeholder="987654321">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" id="provEmail" placeholder="correo@empresa.com">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Dirección</label>
+              <input type="text" class="form-control" id="provDireccion" placeholder="Av. ejemplo 123">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Contacto</label>
+              <input type="text" class="form-control" id="provContacto" placeholder="Nombre del contacto">
+            </div>
+          </div>
         </div>
         <div class="modal-footer-custom">
           <button class="btn-cancel" id="cancelProveedor">Cancelar</button>
-          <button class="btn-primary" id="saveProveedor">Guardar</button>
+          <button class="btn-primary" id="saveProveedor">
+            <i class="bi bi-check-lg"></i> Guardar
+          </button>
         </div>
       </div>
     </div>
-  </div>
 
+    <!-- ── Modal Empleado ── -->
+    <div class="modal-overlay" id="modalEmpleado">
+      <div class="modal-panel">
+        <div class="modal-header-custom">
+          <div class="modal-title-custom">Empleado</div>
+          <button class="btn-modal-close" id="closeModalEmpleado"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="modal-body-custom">
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label">Nombre completo *</label>
+              <input type="text" class="form-control" id="empNombre" placeholder="Juan Pérez">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Cargo</label>
+              <input type="text" class="form-control" id="empCargo" placeholder="Operario">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Área</label>
+              <input type="text" class="form-control" id="empArea" placeholder="Soldadura">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Turno</label>
+              <select class="form-select" id="empTurno">
+                <option value="">Seleccionar...</option>
+                <option value="mañana">Mañana</option>
+                <option value="tarde">Tarde</option>
+                <option value="noche">Noche</option>
+                <option value="rotativo">Rotativo</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer-custom">
+          <button class="btn-cancel" id="cancelEmpleado">Cancelar</button>
+          <button class="btn-primary" id="saveEmpleado">
+            <i class="bi bi-check-lg"></i> Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Modal Encargado ── -->
+    <div class="modal-overlay" id="modalEncargado">
+      <div class="modal-panel">
+        <div class="modal-header-custom">
+          <div class="modal-title-custom">Encargado</div>
+          <button class="btn-modal-close" id="closeModalEncargado"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="modal-body-custom">
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label">Nombre completo *</label>
+              <input type="text" class="form-control" id="encNombre" placeholder="Carlos Ruiz">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Cargo</label>
+              <input type="text" class="form-control" id="encCargo" placeholder="Almacenero">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Área</label>
+              <input type="text" class="form-control" id="encArea" placeholder="Almacén">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Turno</label>
+              <select class="form-select" id="encTurno">
+                <option value="">Seleccionar...</option>
+                <option value="mañana">Mañana</option>
+                <option value="tarde">Tarde</option>
+                <option value="noche">Noche</option>
+                <option value="rotativo">Rotativo</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer-custom">
+          <button class="btn-cancel" id="cancelEncargado">Cancelar</button>
+          <button class="btn-primary" id="saveEncargado">
+            <i class="bi bi-check-lg"></i> Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /modalsContainer -->
+
+  <!-- ══════════════ TOAST ══════════════ -->
   <div class="toast-container" id="toastContainer"></div>
 
+  <!-- ══════════════ SCRIPTS ══════════════ -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/modules/utils.js"></script>
   <script src="js/modules/router.js"></script>

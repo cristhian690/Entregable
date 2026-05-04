@@ -1,8 +1,8 @@
 const express = require('express');
-const router = express.Router();
-const pool = require('../config/db');
+const router  = express.Router();
+const pool    = require('../config/db');
 
-// GET todos los empleados
+// GET todos los empleados activos
 router.get('/', async (req, res) => {
   try {
     const [rows] = await pool.query(
@@ -10,7 +10,6 @@ router.get('/', async (req, res) => {
     );
     res.json({ success: true, data: rows });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ success: false, message: 'Error al obtener empleados', error: err.message });
   }
 });
@@ -22,12 +21,11 @@ router.get('/:id', async (req, res) => {
       'SELECT * FROM empleados WHERE id_emp = ? AND deleted_at IS NULL',
       [req.params.id]
     );
-    if (rows.length === 0) {
+    if (rows.length === 0)
       return res.status(404).json({ success: false, message: 'Empleado no encontrado' });
-    }
     res.json({ success: true, data: rows[0] });
   } catch (err) {
-    res.status(500).json({ success: false, message: 'Error', error: err.message });
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
@@ -35,40 +33,48 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const { nombre, cargo, area, turno } = req.body;
+    if (!nombre) return res.status(400).json({ success: false, message: 'El nombre es requerido' });
+
     const [result] = await pool.query(
       'INSERT INTO empleados (nombre, cargo, area, turno) VALUES (?, ?, ?, ?)',
-      [nombre, cargo, area, turno]
+      [nombre, cargo || null, area || null, turno || null]
     );
     res.json({ success: true, message: 'Empleado creado', id: result.insertId });
   } catch (err) {
-    res.status(500).json({ success: false, message: 'Error al crear', error: err.message });
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
 // PUT actualizar empleado
 router.put('/:id', async (req, res) => {
   try {
-    const { nombre, cargo, area, turno, activo } = req.body;
-    await pool.query(
-      'UPDATE empleados SET nombre=?, cargo=?, area=?, turno=?, activo=? WHERE id_emp=?',
-      [nombre, cargo, area, turno, activo, req.params.id]
+    const { nombre, cargo, area, turno } = req.body;
+    if (!nombre) return res.status(400).json({ success: false, message: 'El nombre es requerido' });
+
+    const [result] = await pool.query(
+      'UPDATE empleados SET nombre=?, cargo=?, area=?, turno=? WHERE id_emp=? AND deleted_at IS NULL',
+      [nombre, cargo || null, area || null, turno || null, req.params.id]
     );
+    if (result.affectedRows === 0)
+      return res.status(404).json({ success: false, message: 'Empleado no encontrado' });
     res.json({ success: true, message: 'Empleado actualizado' });
   } catch (err) {
-    res.status(500).json({ success: false, message: 'Error al actualizar', error: err.message });
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
-// DELETE empleado (borrado lógico)
+// DELETE empleado (soft delete)
 router.delete('/:id', async (req, res) => {
   try {
-    await pool.query(
-      'UPDATE empleados SET deleted_at = NOW() WHERE id_emp = ?',
+    const [result] = await pool.query(
+      'UPDATE empleados SET deleted_at = NOW() WHERE id_emp = ? AND deleted_at IS NULL',
       [req.params.id]
     );
+    if (result.affectedRows === 0)
+      return res.status(404).json({ success: false, message: 'Empleado no encontrado' });
     res.json({ success: true, message: 'Empleado eliminado' });
   } catch (err) {
-    res.status(500).json({ success: false, message: 'Error al eliminar', error: err.message });
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
