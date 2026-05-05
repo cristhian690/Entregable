@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gestión de Herramientas</title>
 
-  <!-- ✅ Protección — redirige a login si no hay token -->
   <script>
     if (!localStorage.getItem('token')) {
       window.location.href = '/login.html';
@@ -19,7 +18,6 @@
 </head>
 <body>
 
-  <!-- ══════════════ SIDEBAR ══════════════ -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <div class="brand-icon"><i class="bi bi-box-seam-fill"></i></div>
@@ -64,12 +62,15 @@
       </a>
 
       <div class="nav-section-label">Sistema</div>
+      <!-- ✅ NUEVO: Reportes -->
+      <a href="#" class="nav-item" data-page="reportes">
+        <i class="bi bi-bar-chart-line"></i><span>Reportes</span>
+      </a>
       <a href="#" class="nav-item" data-page="alertas">
         <i class="bi bi-bell"></i><span>Alertas</span>
       </a>
     </nav>
 
-    <!-- ✅ Footer con nombre del usuario y botón logout -->
     <div class="sidebar-footer">
       <div class="d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center gap-2">
@@ -88,7 +89,6 @@
 
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-  <!-- ══════════════ MAIN ══════════════ -->
   <main class="main-content" id="mainContent">
     <header class="topbar">
       <button class="btn-toggle-sidebar" id="btnToggleSidebar"><i class="bi bi-list"></i></button>
@@ -105,9 +105,7 @@
     </div>
   </main>
 
-  <!-- ══════════════ MODALES ══════════════ -->
   <div id="modalsContainer">
-
     <!-- Modal Préstamo -->
     <div class="modal-overlay" id="modalPrestamo">
       <div class="modal-panel">
@@ -321,15 +319,14 @@
         </div>
       </div>
     </div>
+  </div>
 
-  </div><!-- /modalsContainer -->
-
-  <!-- ══════════════ TOAST ══════════════ -->
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- ══════════════ SCRIPTS ══════════════ -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- ✅ auth.js PRIMERO — define Auth y sobreescribe http() -->
+  <!-- ✅ Chart.js para reportes -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="js/modules/auth.js"></script>
   <script src="js/modules/utils.js"></script>
   <script src="js/modules/router.js"></script>
@@ -342,6 +339,8 @@
   <script src="js/modules/compras.js"></script>
   <script src="js/modules/proveedores.js"></script>
   <script src="js/modules/productos.js"></script>
+  <!-- ✅ Reportes -->
+  <script src="js/modules/reportes.js"></script>
   <script src="js/modules/app.js"></script>
 </body>
 </html>

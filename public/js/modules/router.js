@@ -10,6 +10,8 @@ const ROUTES = {
   encargados:   { title: 'Encargados',   view: '/views/encargados.html',   module: () => EncargadosModule   },
   alertas:      { title: 'Alertas',      view: '/views/alertas.html',      module: () => AlertasModule      },
   productos:    { title: 'Productos',    view: '/views/productos.html',    module: () => ProductosModule     },
+  reportes:     { title: 'Reportes',     view: '/views/reportes.html',     module: () => ReportesModule     },
+
 };
 
 const Router = {

@@ -1,0 +1,153 @@
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Reportes</h1>
+    <p class="page-subtitle">Estadísticas del sistema</p>
+  </div>
+</div>
+
+<!-- Tarjetas resumen -->
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="stat-card">
+      <div class="stat-icon" style="--c:#6366f1"><i class="bi bi-tools"></i></div>
+      <div class="stat-value" id="rep-herramientas">–</div>
+      <div class="stat-label">Herramientas</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card">
+      <div class="stat-icon" style="--c:#10b981"><i class="bi bi-people"></i></div>
+      <div class="stat-value" id="rep-empleados">–</div>
+      <div class="stat-label">Empleados</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card">
+      <div class="stat-icon" style="--c:#f59e0b"><i class="bi bi-bookmark-star"></i></div>
+      <div class="stat-value" id="rep-prestamos">–</div>
+      <div class="stat-label">Préstamos Activos</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card">
+      <div class="stat-icon" style="--c:#ef4444"><i class="bi bi-exclamation-triangle"></i></div>
+      <div class="stat-value" id="rep-stockbajo">–</div>
+      <div class="stat-label">Stock Bajo</div>
+    </div>
+  </div>
+</div>
+
+<!-- Gráfica 1: Préstamos por mes -->
+<div class="card-panel p-4 mb-4">
+  <div class="panel-title mb-3">
+    <i class="bi bi-bar-chart-fill me-2 text-primary"></i>Préstamos por Mes (últimos 6 meses)
+  </div>
+  <canvas id="lienzoPorMes"></canvas>
+</div>
+
+<!-- Gráfica 2: Herramientas más prestadas -->
+<div class="card-panel p-4 mb-4">
+  <div class="panel-title mb-3">
+    <i class="bi bi-bar-chart-fill me-2 text-warning"></i>Herramientas más Prestadas
+  </div>
+  <canvas id="lienzoHerramientas"></canvas>
+</div>
+
+<!-- Gráfica 3: Empleados más activos -->
+<div class="card-panel p-4 mb-4">
+  <div class="panel-title mb-3">
+    <i class="bi bi-bar-chart-fill me-2 text-success"></i>Empleados más Activos
+  </div>
+  <canvas id="lienzoEmpleados"></canvas>
+</div>
+
+<!-- Botón Generar Reporte -->
+<div class="text-end mb-4">
+  <button class="btn btn-primary btn-lg" onclick="ReportesModule.mostrarSeccionReporte()">
+    <i class="bi bi-file-earmark-pdf me-2"></i>Generar Reporte PDF
+  </button>
+</div>
+
+<!-- ══ SECCIÓN FILTROS Y PDF (oculta al inicio) ══ -->
+<div id="seccionReporte" style="display:none">
+  <hr class="my-4">
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <h4 class="fw-bold mb-0">
+      <i class="bi bi-funnel me-2 text-primary"></i>Filtrar y Descargar Reporte
+    </h4>
+    <button class="btn btn-outline-secondary btn-sm" onclick="ReportesModule.ocultarSeccionReporte()">
+      <i class="bi bi-x-lg"></i> Cerrar
+    </button>
+  </div>
+
+  <!-- Filtros préstamos -->
+  <div class="card-panel mb-4">
+    <div class="panel-header">
+      <span class="panel-title"><i class="bi bi-bookmark-star me-2 text-primary"></i>Reporte de Préstamos</span>
+    </div>
+    <div class="p-4">
+      <div class="row g-3 mb-3">
+        <div class="col-md-3">
+          <label class="form-label fw-bold" style="font-size:.82rem">Fecha desde</label>
+          <input type="date" class="form-control" id="filtFechaDesde">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-bold" style="font-size:.82rem">Fecha hasta</label>
+          <input type="date" class="form-control" id="filtFechaHasta">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-bold" style="font-size:.82rem">Estado</label>
+          <select class="form-select" id="filtEstado">
+            <option value="">Todos</option>
+            <option value="activo">Activo</option>
+            <option value="devuelto">Devuelto</option>
+            <option value="parcial">Parcial</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-bold" style="font-size:.82rem">Empleado</label>
+          <select class="form-select" id="filtEmpleado">
+            <option value="">Todos</option>
+          </select>
+        </div>
+      </div>
+      <div class="d-flex gap-2 mb-4">
+        <button class="btn btn-primary" onclick="ReportesModule.filtrarPrestamos()">
+          <i class="bi bi-search"></i> Filtrar
+        </button>
+        <button class="btn btn-outline-secondary" onclick="ReportesModule.limpiarFiltros()">
+          <i class="bi bi-x-circle"></i> Limpiar
+        </button>
+        <button class="btn btn-danger ms-auto" id="btnPdfPrestamos"
+                onclick="ReportesModule.descargarPdfPrestamos()" disabled>
+          <i class="bi bi-file-earmark-pdf"></i> Descargar PDF Préstamos
+        </button>
+      </div>
+      <div id="resultadoPrestamos">
+        <p class="text-muted text-center py-3">Aplica los filtros y haz clic en <strong>Filtrar</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stock bajo -->
+  <div class="card-panel mb-4">
+    <div class="panel-header d-flex align-items-center justify-content-between">
+      <span class="panel-title"><i class="bi bi-exclamation-triangle-fill me-2 text-danger"></i>Reporte de Stock Bajo</span>
+      <button class="btn btn-sm btn-danger" onclick="ReportesModule.descargarPdfStockBajo()">
+        <i class="bi bi-file-earmark-pdf"></i> Descargar PDF Stock Bajo
+      </button>
+    </div>
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th>Herramienta</th><th>Marca</th>
+          <th class="text-center">Stock</th>
+          <th class="text-center">Mínimo</th>
+          <th>Ubicación</th>
+        </tr>
+      </thead>
+      <tbody id="tablaStockBajo"></tbody>
+    </table>
+  </div>
+</div>

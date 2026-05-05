@@ -163,13 +163,6 @@
     <span id="btnText"><i class="bi bi-box-arrow-in-right me-1"></i> Ingresar</span>
   </button>
 
-  <!-- Demo credentials -->
-  <div class="demo-hint">
-    <strong>Cuentas de prueba:</strong>
-    <div class="demo-row"><span>Admin</span><span>admin@taller.com / admin123</span></div>
-    <div class="demo-row"><span>Encargado</span><span>carlos@taller.com / 1234</span></div>
-  </div>
-
 </div>
 
 <script>
@@ -178,19 +171,6 @@
   const btnText  = document.getElementById('btnText');
   const errorBox = document.getElementById('errorBox');
   const errorMsg = document.getElementById('errorMsg');
-
-  // Toggle contraseña visible/oculta
-  document.getElementById('togglePass').addEventListener('click', () => {
-    const inp  = document.getElementById('loginPassword');
-    const icon = document.getElementById('eyeIcon');
-    if (inp.type === 'password') {
-      inp.type  = 'text';
-      icon.className = 'bi bi-eye-slash';
-    } else {
-      inp.type  = 'password';
-      icon.className = 'bi bi-eye';
-    }
-  });
 
   // Login al presionar Enter
   document.getElementById('loginPassword').addEventListener('keydown', e => {
