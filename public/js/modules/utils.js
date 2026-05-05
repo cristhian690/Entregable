@@ -1,23 +1,6 @@
 'use strict';
 
-/* ════════════════════════════════════════════
-   HTTP HELPER
-════════════════════════════════════════════ */
-async function http(url, method = 'GET', body = null) {
-  const opts = {
-    method,
-    headers: { 'Content-Type': 'application/json' }
-  };
-
-  if (body) opts.body = JSON.stringify(body);
-
-  const res = await fetch(url, opts);
-  const data = await res.json();
-
-  if (!res.ok) throw new Error(data.message || `Error ${res.status}`);
-
-  return data;
-}
+// http() está definida en auth.js — NO duplicar aquí
 
 /* ════════════════════════════════════════════
    TOASTS

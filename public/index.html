@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gestión de Herramientas</title>
+
+  <!-- ✅ Protección — redirige a login si no hay token -->
+  <script>
+    if (!localStorage.getItem('token')) {
+      window.location.href = '/login.html';
+    }
+  </script>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -61,13 +69,19 @@
       </a>
     </nav>
 
+    <!-- ✅ Footer con nombre del usuario y botón logout -->
     <div class="sidebar-footer">
-      <div class="d-flex align-items-center gap-2">
-        <div class="avatar-xs"><i class="bi bi-person-fill"></i></div>
-        <div>
-          <div class="fw-600 text-sm">Administrador</div>
-          <div class="text-muted" style="font-size:11px">Sistema v1.0</div>
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-2">
+          <div class="avatar-xs"><i class="bi bi-person-fill"></i></div>
+          <div>
+            <div class="fw-600 text-sm" id="sidebarUserName">Cargando...</div>
+            <div class="text-muted" style="font-size:11px" id="sidebarUserRol">–</div>
+          </div>
         </div>
+        <button class="btn btn-sm btn-outline-danger" id="btnLogout" title="Cerrar sesión">
+          <i class="bi bi-box-arrow-right"></i>
+        </button>
       </div>
     </div>
   </aside>
@@ -94,7 +108,7 @@
   <!-- ══════════════ MODALES ══════════════ -->
   <div id="modalsContainer">
 
-    <!-- ── Modal Préstamo (COMPLETO) ── -->
+    <!-- Modal Préstamo -->
     <div class="modal-overlay" id="modalPrestamo">
       <div class="modal-panel">
         <div class="modal-header-custom">
@@ -105,15 +119,11 @@
           <div class="row g-3">
             <div class="col-md-6">
               <label class="form-label">Empleado *</label>
-              <select class="form-select" id="selectEmpleado">
-                <option value="">Seleccionar empleado...</option>
-              </select>
+              <select class="form-select" id="selectEmpleado"><option value="">Seleccionar empleado...</option></select>
             </div>
             <div class="col-md-6">
               <label class="form-label">Encargado *</label>
-              <select class="form-select" id="selectEncargado">
-                <option value="">Seleccionar encargado...</option>
-              </select>
+              <select class="form-select" id="selectEncargado"><option value="">Seleccionar encargado...</option></select>
             </div>
             <div class="col-md-6">
               <label class="form-label">Motivo de uso</label>
@@ -127,14 +137,9 @@
               <hr class="my-1">
               <label class="form-label fw-bold">Herramientas a prestar</label>
               <div class="d-flex gap-2 mb-2">
-                <select class="form-select" id="selectHerramienta">
-                  <option value="">Seleccionar herramienta...</option>
-                </select>
-                <input type="number" class="form-control" id="cantidadHerramienta"
-                       value="1" min="1" style="width:90px" placeholder="Cant.">
-                <button class="btn btn-outline-primary" id="btnAgregarHerramienta">
-                  <i class="bi bi-plus"></i> Agregar
-                </button>
+                <select class="form-select" id="selectHerramienta"><option value="">Seleccionar herramienta...</option></select>
+                <input type="number" class="form-control" id="cantidadHerramienta" value="1" min="1" style="width:90px">
+                <button class="btn btn-outline-primary" id="btnAgregarHerramienta"><i class="bi bi-plus"></i> Agregar</button>
               </div>
               <div id="herramientasSeleccionadas" class="mt-2"></div>
             </div>
@@ -142,14 +147,12 @@
         </div>
         <div class="modal-footer-custom">
           <button class="btn-cancel" id="cancelPrestamo">Cancelar</button>
-          <button class="btn-primary" id="savePrestamo">
-            <i class="bi bi-check-lg"></i> Registrar Préstamo
-          </button>
+          <button class="btn-primary" id="savePrestamo"><i class="bi bi-check-lg"></i> Registrar Préstamo</button>
         </div>
       </div>
     </div>
 
-    <!-- ── Modal Compra (COMPLETO) ── -->
+    <!-- Modal Compra -->
     <div class="modal-overlay" id="modalCompra">
       <div class="modal-panel">
         <div class="modal-header-custom">
@@ -160,37 +163,27 @@
           <div class="row g-3">
             <div class="col-md-6">
               <label class="form-label">Proveedor *</label>
-              <select class="form-select" id="selectProveedor">
-                <option value="">Seleccionar proveedor...</option>
-              </select>
+              <select class="form-select" id="selectProveedor"><option value="">Seleccionar proveedor...</option></select>
             </div>
             <div class="col-md-6">
               <label class="form-label">Encargado *</label>
-              <select class="form-select" id="selectEncargadoCompra">
-                <option value="">Seleccionar encargado...</option>
-              </select>
+              <select class="form-select" id="selectEncargadoCompra"><option value="">Seleccionar encargado...</option></select>
             </div>
             <div class="col-12">
               <hr class="my-1">
               <label class="form-label fw-bold">Herramientas a comprar</label>
               <div class="row g-2 mb-2">
                 <div class="col-md-5">
-                  <select class="form-select" id="selectHerramientaCompra">
-                    <option value="">Seleccionar herramienta...</option>
-                  </select>
+                  <select class="form-select" id="selectHerramientaCompra"><option value="">Seleccionar herramienta...</option></select>
                 </div>
                 <div class="col-md-2">
-                  <input type="number" class="form-control" id="cantidadCompra"
-                         value="1" min="1" placeholder="Cant.">
+                  <input type="number" class="form-control" id="cantidadCompra" value="1" min="1" placeholder="Cant.">
                 </div>
                 <div class="col-md-3">
-                  <input type="number" class="form-control" id="precioCompra"
-                         value="0" min="0" step="0.01" placeholder="Precio unit.">
+                  <input type="number" class="form-control" id="precioCompra" value="0" min="0" step="0.01" placeholder="Precio unit.">
                 </div>
                 <div class="col-md-2">
-                  <button class="btn btn-outline-primary w-100" id="btnAgregarHerramientaCompra">
-                    <i class="bi bi-plus"></i>
-                  </button>
+                  <button class="btn btn-outline-primary w-100" id="btnAgregarHerramientaCompra"><i class="bi bi-plus"></i></button>
                 </div>
               </div>
               <div id="herramientasCompraSeleccionadas" class="mt-2"></div>
@@ -202,14 +195,12 @@
         </div>
         <div class="modal-footer-custom">
           <button class="btn-cancel" id="cancelCompra">Cancelar</button>
-          <button class="btn-primary" id="saveCompra">
-            <i class="bi bi-check-lg"></i> Registrar Compra
-          </button>
+          <button class="btn-primary" id="saveCompra"><i class="bi bi-check-lg"></i> Registrar Compra</button>
         </div>
       </div>
     </div>
 
-    <!-- ── Modal Proveedor (COMPLETO) ── -->
+    <!-- Modal Proveedor -->
     <div class="modal-overlay" id="modalProveedor">
       <div class="modal-panel">
         <div class="modal-header-custom">
@@ -246,14 +237,12 @@
         </div>
         <div class="modal-footer-custom">
           <button class="btn-cancel" id="cancelProveedor">Cancelar</button>
-          <button class="btn-primary" id="saveProveedor">
-            <i class="bi bi-check-lg"></i> Guardar
-          </button>
+          <button class="btn-primary" id="saveProveedor"><i class="bi bi-check-lg"></i> Guardar</button>
         </div>
       </div>
     </div>
 
-    <!-- ── Modal Empleado ── -->
+    <!-- Modal Empleado -->
     <div class="modal-overlay" id="modalEmpleado">
       <div class="modal-panel">
         <div class="modal-header-custom">
@@ -288,14 +277,12 @@
         </div>
         <div class="modal-footer-custom">
           <button class="btn-cancel" id="cancelEmpleado">Cancelar</button>
-          <button class="btn-primary" id="saveEmpleado">
-            <i class="bi bi-check-lg"></i> Guardar
-          </button>
+          <button class="btn-primary" id="saveEmpleado"><i class="bi bi-check-lg"></i> Guardar</button>
         </div>
       </div>
     </div>
 
-    <!-- ── Modal Encargado ── -->
+    <!-- Modal Encargado -->
     <div class="modal-overlay" id="modalEncargado">
       <div class="modal-panel">
         <div class="modal-header-custom">
@@ -330,9 +317,7 @@
         </div>
         <div class="modal-footer-custom">
           <button class="btn-cancel" id="cancelEncargado">Cancelar</button>
-          <button class="btn-primary" id="saveEncargado">
-            <i class="bi bi-check-lg"></i> Guardar
-          </button>
+          <button class="btn-primary" id="saveEncargado"><i class="bi bi-check-lg"></i> Guardar</button>
         </div>
       </div>
     </div>
@@ -344,6 +329,8 @@
 
   <!-- ══════════════ SCRIPTS ══════════════ -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- ✅ auth.js PRIMERO — define Auth y sobreescribe http() -->
+  <script src="js/modules/auth.js"></script>
   <script src="js/modules/utils.js"></script>
   <script src="js/modules/router.js"></script>
   <script src="js/modules/dashboard.js"></script>

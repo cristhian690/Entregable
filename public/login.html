@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Iniciar Sesión – StockPro</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+
+    /* ── Card ── */
+    .login-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 25px 60px rgba(0,0,0,.5);
+    }
+
+    /* ── Logo ── */
+    .login-logo {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 36px;
+    }
+    .logo-icon {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; color: #fff;
+    }
+    .logo-name  { font-size: 1.6rem; font-weight: 700; color: #f1f5f9; }
+    .logo-sub   { font-size: .78rem; color: #64748b; margin-top: 2px; }
+
+    /* ── Form ── */
+    .form-label  { font-size: .82rem; color: #94a3b8; font-weight: 500; margin-bottom: 6px; display: block; }
+    .form-group  { margin-bottom: 18px; }
+    .input-wrap  { position: relative; }
+    .input-wrap .bi { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 1rem; }
+    .form-control {
+      background: #0f172a; border: 1px solid #334155;
+      border-radius: 10px; color: #f1f5f9;
+      padding: 12px 14px 12px 42px;
+      font-size: .93rem; width: 100%;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .form-control:focus {
+      outline: none; border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99,102,241,.2);
+      background: #0f172a; color: #f1f5f9;
+    }
+    .form-control::placeholder { color: #475569; }
+    .toggle-pass {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      color: #475569; cursor: pointer; font-size: 1rem; background: none; border: none; padding: 0;
+    }
+    .toggle-pass:hover { color: #94a3b8; }
+
+    /* ── Error ── */
+    .error-box {
+      background: rgba(239,68,68,.12); border: 1px solid rgba(239,68,68,.3);
+      border-radius: 10px; padding: 12px 16px;
+      color: #fca5a5; font-size: .85rem;
+      display: none; margin-bottom: 18px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .error-box.show { display: flex; }
+    .error-box { display: none; }
+
+    /* ── Button ── */
+    .btn-login {
+      width: 100%; padding: 13px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff; border: none; border-radius: 10px;
+      font-size: .97rem; font-weight: 600; cursor: pointer;
+      transition: opacity .2s, transform .15s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-login:hover:not(:disabled) { opacity: .9; transform: translateY(-1px); }
+    .btn-login:disabled { opacity: .6; cursor: not-allowed; }
+
+    /* ── Spinner ── */
+    .spin {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Demo hint ── */
+    .demo-hint {
+      margin-top: 24px; padding: 14px 16px;
+      background: rgba(99,102,241,.08); border: 1px solid rgba(99,102,241,.2);
+      border-radius: 10px; font-size: .78rem; color: #94a3b8;
+    }
+    .demo-hint strong { color: #a5b4fc; }
+    .demo-row { display: flex; justify-content: space-between; margin-top: 4px; }
+  </style>
+</head>
+<body>
+
+    <script>
+  if (localStorage.getItem('token')) {
+    window.location.href = '/index.html';
+  }
+</script>
+
+<div class="login-card">
+
+  <!-- Logo -->
+  <div class="login-logo">
+    <div class="logo-icon"><i class="bi bi-box-seam-fill"></i></div>
+    <div>
+      <div class="logo-name">StockPro</div>
+      <div class="logo-sub">Sistema de Préstamo de Herramientas</div>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div class="error-box" id="errorBox">
+    <i class="bi bi-exclamation-circle-fill"></i>
+    <span id="errorMsg">Credenciales incorrectas</span>
+  </div>
+
+  <!-- Form -->
+  <div class="form-group">
+    <label class="form-label">Correo electrónico</label>
+    <div class="input-wrap">
+      <i class="bi bi-envelope"></i>
+      <input type="email" class="form-control" id="loginEmail"
+             placeholder="admin@taller.com" autocomplete="email"/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">Contraseña</label>
+    <div class="input-wrap">
+      <i class="bi bi-lock"></i>
+      <input type="password" class="form-control" id="loginPassword"
+             placeholder="••••••••" autocomplete="current-password"/>
+      <button class="toggle-pass" id="togglePass" type="button">
+        <i class="bi bi-eye" id="eyeIcon"></i>
+      </button>
+    </div>
+  </div>
+
+  <button class="btn-login" id="btnLogin">
+    <div class="spin" id="loginSpinner"></div>
+    <span id="btnText"><i class="bi bi-box-arrow-in-right me-1"></i> Ingresar</span>
+  </button>
+
+  <!-- Demo credentials -->
+  <div class="demo-hint">
+    <strong>Cuentas de prueba:</strong>
+    <div class="demo-row"><span>Admin</span><span>admin@taller.com / admin123</span></div>
+    <div class="demo-row"><span>Encargado</span><span>carlos@taller.com / 1234</span></div>
+  </div>
+
+</div>
+
+<script>
+  const btn      = document.getElementById('btnLogin');
+  const spinner  = document.getElementById('loginSpinner');
+  const btnText  = document.getElementById('btnText');
+  const errorBox = document.getElementById('errorBox');
+  const errorMsg = document.getElementById('errorMsg');
+
+  // Toggle contraseña visible/oculta
+  document.getElementById('togglePass').addEventListener('click', () => {
+    const inp  = document.getElementById('loginPassword');
+    const icon = document.getElementById('eyeIcon');
+    if (inp.type === 'password') {
+      inp.type  = 'text';
+      icon.className = 'bi bi-eye-slash';
+    } else {
+      inp.type  = 'password';
+      icon.className = 'bi bi-eye';
+    }
+  });
+
+  // Login al presionar Enter
+  document.getElementById('loginPassword').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+  document.getElementById('loginEmail').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+
+  btn.addEventListener('click', doLogin);
+
+  async function doLogin() {
+    const email    = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    // Ocultar error anterior
+    errorBox.classList.remove('show');
+
+    if (!email || !password) {
+      showError('Completa todos los campos');
+      return;
+    }
+
+    // Loading
+    setLoading(true);
+
+    try {
+      const res  = await fetch('/api/auth/login', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        // Guardar token y usuario en localStorage
+        localStorage.setItem('token',   data.token);
+        localStorage.setItem('usuario', JSON.stringify(data.usuario));
+        // Redirigir al sistema
+        window.location.href = '/index.html';
+      } else {
+        showError(data.message || 'Credenciales incorrectas');
+      }
+    } catch (err) {
+      showError('Error de conexión con el servidor');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function showError(msg) {
+    errorMsg.textContent = msg;
+    errorBox.classList.add('show');
+    errorBox.style.display = 'flex';
+  }
+
+  function setLoading(loading) {
+    btn.disabled          = loading;
+    spinner.style.display = loading ? 'block' : 'none';
+    btnText.style.display = loading ? 'none'  : 'flex';
+  }
+</script>
+
+</body>
+</html>
