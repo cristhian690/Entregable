@@ -942,3 +942,49 @@ a { text-decoration: none; color: inherit; }
   .stat-value { font-size: 22px; }
   .page-title { font-size: 20px; }
 }
+
+/* ══════════════════════════════════════════
+   BADGES DE ESTADO
+══════════════════════════════════════════ */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'DM Mono', monospace;
+}
+
+.badge-success  { background: rgba(16,185,129,.15); color: #10b981; }
+.badge-warning  { background: rgba(245,158,11,.15);  color: #f59e0b; }
+.badge-danger   { background: rgba(239,68,68,.15);   color: #ef4444; }
+.badge-info     { background: rgba(99,102,241,.15);  color: #6366f1; }
+.badge-secondary{ background: rgba(107,114,128,.15); color: #6b7280; }
+
+/* ══════════════════════════════════════════
+   SIDEBAR FOOTER — texto usuario
+══════════════════════════════════════════ */
+.sidebar-footer .fw-600 {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sidebar-footer .text-muted {
+  color: #9ca3af !important;
+  font-size: 11px;
+}
+
+/* ══════════════════════════════════════════
+   BOTÓN PRIMARY (Bootstrap override)
+══════════════════════════════════════════ */
+.btn-primary {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark) !important;
+  border-color: var(--primary-dark) !important;
+}

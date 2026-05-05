@@ -38,16 +38,29 @@ const Auth = {
     }
   },
 
-  renderUser() {
+  getUsuario() {
     const token = localStorage.getItem('token');
-    if (!token) return;
+    if (!token) return null;
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      const nameEl = document.getElementById('sidebarUserName');
-      const rolEl  = document.getElementById('sidebarUserRol');
-      if (nameEl) nameEl.textContent = payload.nombre || payload.email || 'Usuario';
-      if (rolEl)  rolEl.textContent  = payload.rol || '';
-    } catch (_) { /* token malformado */ }
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (_) { return null; }
+  },
+
+  renderUser() {
+    const u = this.getUsuario();
+    if (!u) return;
+
+    const rolBadge = {
+      admin:     '🔑 Administrador',
+      encargado: '📋 Encargado',
+      empleado:  '👷 Empleado'
+    };
+
+    const nameEl = document.getElementById('sidebarUserName');
+    const rolEl  = document.getElementById('sidebarUserRol');
+
+    if (nameEl) nameEl.textContent = u.nombre;
+    if (rolEl)  rolEl.textContent  = rolBadge[u.rol] || u.rol;
   },
 
   logout() {
