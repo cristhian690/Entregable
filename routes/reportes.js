@@ -3,7 +3,6 @@ const router      = express.Router();
 const PDFDocument = require('pdfkit');
 const pool        = require('../config/db');
 
-// ── Resumen ───────────────────────────────────────────────────
 router.get('/resumen', async (req, res) => {
   try {
     const [[{ total_herramientas }]] = await pool.query('SELECT COUNT(*) AS total_herramientas FROM herramientas WHERE deleted_at IS NULL');

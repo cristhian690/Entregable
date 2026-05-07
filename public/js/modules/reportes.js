@@ -2,7 +2,6 @@
 
 const ReportesModule = {
 
-  // Referencias a gráficos — igual que el profe
   graficoPorMes:      null,
   graficoHerramientas: null,
   graficoEmpleados:   null,
@@ -38,7 +37,6 @@ const ReportesModule = {
       if (!lienzo) return;
       if (this.graficoPorMes) this.graficoPorMes.destroy();
 
-      // Colores como el profe
       const coloresFondo = [
         'rgba(99,102,241,0.7)',
         'rgba(16,185,129,0.7)',

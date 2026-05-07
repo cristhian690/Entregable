@@ -1,7 +1,7 @@
 'use strict';
 
 const ComprasModule = {
-  _allData: [],  // ✅ para el buscador
+  _allData: [],  
   _herramientasSeleccionadas: [],
 
   async init() {
@@ -21,6 +21,7 @@ const ComprasModule = {
     document.getElementById('inputBuscar')?.addEventListener('input', (e) => {
       const t = e.target.value.toLowerCase();
       const filtrados = this._allData.filter(c =>
+
         (c.nombre_proveedor  || '').toLowerCase().includes(t) ||
         (c.nombre_encargado  || '').toLowerCase().includes(t) ||
         (c.estado            || '').toLowerCase().includes(t) ||

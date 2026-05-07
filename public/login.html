@@ -73,10 +73,9 @@
       border-radius: 10px; padding: 12px 16px;
       color: #fca5a5; font-size: .85rem;
       display: none; margin-bottom: 18px;
-      display: flex; align-items: center; gap: 8px;
+      align-items: center; gap: 8px;
     }
     .error-box.show { display: flex; }
-    .error-box { display: none; }
 
     /* ── Button ── */
     .btn-login {
@@ -181,6 +180,19 @@
   });
 
   btn.addEventListener('click', doLogin);
+
+  // Toggle visibilidad contraseña
+  document.getElementById('togglePass').addEventListener('click', () => {
+    const input = document.getElementById('loginPassword');
+    const icon  = document.getElementById('eyeIcon');
+    if (input.type === 'password') {
+      input.type  = 'text';
+      icon.className = 'bi bi-eye-slash';
+    } else {
+      input.type  = 'password';
+      icon.className = 'bi bi-eye';
+    }
+  });
 
   async function doLogin() {
     const email    = document.getElementById('loginEmail').value.trim();

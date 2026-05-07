@@ -68,26 +68,26 @@ const HerramientasModule = {
   _editCode: null,
 
   async loadMarcas() {
+    const select = document.getElementById('herrMarca');
+    if (!select) return;
     try {
-      const select = document.getElementById('herrMarca');
-      if (select) {
-        select.innerHTML = `
-          <option value="">Seleccionar marca...</option>
-          <option value="1">Bosch</option>
-          <option value="2">Stanley</option>
-          <option value="3">Truper</option>
-          <option value="4">Makita</option>
-          <option value="5">Black &amp; Decker</option>
-          <option value="6">Hilti</option>
-          <option value="7">Einhell</option>
-          <option value="8">Ryobi</option>
-          <option value="9">Milwaukee</option>
-          <option value="10">Hitachi</option>
-          <option value="11">DeWalt</option>
-        `;
-      }
-    } catch (err) {
-      console.error(err);
+      const res = await http('/api/marcas');
+      select.innerHTML = '<option value="">Seleccionar marca...</option>' +
+        res.data.map(m => `<option value="${m.id_marca}">${escapeHtml(m.nombre)}</option>`).join('');
+    } catch (_) {
+      select.innerHTML = `
+        <option value="">Seleccionar marca...</option>
+        <option value="1">Bosch</option>
+        <option value="2">Stanley</option>
+        <option value="3">Truper</option>
+        <option value="4">Makita</option>
+        <option value="5">Dewalt</option>
+        <option value="6">Black &amp; Decker</option>
+        <option value="7">Urrea</option>
+        <option value="8">Pretul</option>
+        <option value="9">Hilti</option>
+        <option value="10">Milwaukee</option>
+      `;
     }
   },
 

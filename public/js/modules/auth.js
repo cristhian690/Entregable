@@ -1,8 +1,6 @@
 'use strict';
 
-/* ════════════════════════════════════════════
-   HTTP HELPER — incluye JWT en cada petición
-════════════════════════════════════════════ */
+
 async function http(url, method = 'GET', body = null) {
   const token = localStorage.getItem('token');
   const opts = {
@@ -17,7 +15,7 @@ async function http(url, method = 'GET', body = null) {
 
   const res = await fetch(url, opts);
 
-  if (res.status === 401) {
+  if (res.status === 401 || res.status === 403) {
     Auth.logout();
     return;
   }
@@ -27,9 +25,6 @@ async function http(url, method = 'GET', body = null) {
   return data;
 }
 
-/* ════════════════════════════════════════════
-   AUTH
-════════════════════════════════════════════ */
 const Auth = {
   protectPage() {
     const token = localStorage.getItem('token');

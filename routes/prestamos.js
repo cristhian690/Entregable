@@ -101,7 +101,7 @@ router.put('/:id/devolver', async (req, res) => {
       [id_pres]
     );
     if (prestamos.length === 0) throw new Error('Préstamo no encontrado');
-    if (prestamos[0].estado !== 'activo') throw new Error('Este préstamo ya fue devuelto');
+    if (prestamos[0].estado !== 'activo') throw new Error(`Este préstamo no puede devolverse (estado: ${prestamos[0].estado})`);
 
     const prestamo = prestamos[0];
 

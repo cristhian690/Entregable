@@ -1,7 +1,7 @@
 'use strict';
 
 const PrestamosModule = {
-  _allData: [],  // ✅ para el buscador
+  _allData: [], 
   _herramientasSeleccionadas: [],
 
   async init() {

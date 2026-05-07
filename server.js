@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/auth',        require('./routes/auth'));
+app.use('/api/marcas',      authMiddleware, require('./routes/marcas'));
 app.use('/api/herramientas',authMiddleware, require('./routes/herramientas'));
 app.use('/api/empleados',   authMiddleware, require('./routes/empleados'));
 app.use('/api/encargados',  authMiddleware, require('./routes/encargados'));
